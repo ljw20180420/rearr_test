@@ -1,178 +1,3 @@
-# Introduction
-
-TODO
-- animation of stagger, large resection, mmej
-- example of alignment
-- compare with CRISPResso
-- animation of algorithm
-
-# Installation
-
-```console
-$ conda install bioconda::rearr
-```
-
-# Chimeric alignment
-
-```mermaid
----
-title: rearrangement
----
-flowchart TD
-    INPUT[(
-        <table>
-            <tr>
-                <th>query</th>
-                <th>#</th>
-                <th>id</th>
-            </tr>
-            <tr>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-            </tr>
-        </table>
-    )]
-    INPUT --> REARR[<code>rearrangement</code>]
-    REF[(
-        <table>
-            <tr>
-                <th>s1</th>
-                <th>ref1</th>
-                <th>e1</th>
-                <th>s2</th>
-                <th>ref2</th>
-                <th>e2</th>
-            </tr>
-            <tr>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-            </tr>
-        </table>
-    )] --> REARR
-    REARR --> OUTPUT[
-        <table>
-            <tr>
-                <td>idx</td>
-                <td>#</td>
-                <td>score</td>
-                <td>id</td>
-            </tr>
-            <tr>
-                <td>ref</td>
-            </tr>
-            <tr>
-                <td>query</td>
-            </tr>
-        </table>
-    ]
-```
-
-TODO
-- Example support specify the start and end of reference.
-- Example folder for rearrangement.
-- Output example in markdown.
-
-```
-$ rearrangement -h
-###Basic Usage
-rearrangement <input_file 3<reference_file
-
-### Parameters
--h, -help, --help: Display help.
-# Aligning Parameters
--s0: Mismatching score. (default: -3)
--s1: Matching score for non-extension reference part. (default: +1)
--s2: Matching score for extension reference part. (default: +1)
--u: Gap-extending penalty. (default: -2)
--v: Gap-opening penalty. (default: -5)
--ru: Gap-extending penalty for unaligned reference ends. (default: 0)
--rv: Gap-opening penalty for unaligned reference ends. (default: 0)
--qu: Gap-extending penalty for unaligned query parts. (default: 0)
--qv: Gap-opening penalty for unaligned query parts. (default: 0)
-```
-
-# Correct microhomology
-
-```mermaid
----
-title: correct_micro_homology.AWK
----
-flowchart TD
-    REF[(
-        <table>
-            <tr>
-                <th>s1</th>
-                <th>ref1</th>
-                <th>e1</th>
-                <th>s2</th>
-                <th>ref2</th>
-                <th>e2</th>
-            </tr>
-            <tr>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-            </tr>
-        </table>
-    )] --> CORRECT
-    CF[(
-        <table>
-            <tr>
-                <th>Up/Down</th>
-            </tr>
-            <tr>
-                <td>...</td>
-            </tr>
-        </table>
-    )] --> CORRECT
-    OUTPUT[
-        <table>
-            <tr>
-                <td>idx</td>
-                <td>#</td>
-                <td>score</td>
-                <td>id</td>
-            </tr>
-            <tr>
-                <td>ref</td>
-            </tr>
-            <tr>
-                <td>query</td>
-            </tr>
-        </table>
-    ] --> CORRECT[<code>correct_micro_homology.AWK</code>]
-    CORRECT --> COROUTPUT[
-        <table>
-            <tr>
-                <td>idx</td>
-                <td>#</td>
-                <td>score</td>
-                <td>id</td>
-                <td>...</td>
-            </tr>
-            <tr>
-                <td>ref</td>
-            </tr>
-            <tr>
-                <td>query</td>
-            </tr>
-        </table>
-    ]
-```
-
-TODO
-- Animation support the necessity of MH correction.
-- Example folder for MH correction.
-- Example output in markdown.
-
 # Workflow
 
 ```mermaid
@@ -263,7 +88,7 @@ flowchart TD
             </tr>
         </table>
     )] --> REARR
-    REARR --> OUTPUT[
+    REARR --> OUTPUT[(
         <table>
             <tr>
                 <td>idx</td>
@@ -278,7 +103,7 @@ flowchart TD
                 <td>query</td>
             </tr>
         </table>
-    ]
+    )]
     REF --> CORRECT
     CF[(
         <table>
@@ -291,7 +116,7 @@ flowchart TD
         </table>
     )] --> CORRECT
     OUTPUT --> CORRECT[<code>correct_micro_homology.AWK</code>]
-    CORRECT --> COROUTPUT[
+    CORRECT --> COROUTPUT[(
         <table>
             <tr>
                 <td>idx</td>
@@ -307,7 +132,7 @@ flowchart TD
                 <td>query</td>
             </tr>
         </table>
-    ]
+    )]
 ```
 
 TODO
@@ -331,3 +156,14 @@ TODO
 - show workflow UI
 
 https://qiangwulab.sjtu.edu.cn
+
+# Technical improvements
+
+## Time
+
+[Farrar's implementation of SIMD](https://doi.org/10.1093/bioinformatics/btl582).
+
+## Space
+
+- [Optimal alignments in linear space](https://doi.org/10.1093/bioinformatics/4.1.11).
+- Branch and bound algorithm.
