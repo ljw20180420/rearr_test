@@ -1,0 +1,11 @@
+chimeric_alignment/alg
+core/corrected
+correct_micro_homology/corrected
+demultiplex/ontarget
+get_query/query
+remove_duplication/unique
+remove_duplication/unique_R1_only
+workflow/corrected
+workflow/ontarget
+workflow/query
+workflow/unique
