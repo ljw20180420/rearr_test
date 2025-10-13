@@ -1,2 +1,3 @@
 bioconda::rearr
 conda-forge::jupyterlab
+conda-forge::apptainer
